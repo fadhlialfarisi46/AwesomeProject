@@ -1,0 +1,24 @@
+const API_KEY = 'INSERT_YOUR_API_KEY_HERE'; // Replace with your actual API key
+const BASE_URL = 'https://api.themoviedb.org/3';
+export type Movie = {
+    id: number;
+    title: string;
+    overview: string;
+    poster_path: string;
+};
+
+type MovieApiResponse = {
+    results: Movie[];
+    page: number;
+    total_pages: number;
+    total_results: number;
+};
+
+export async function fetchMovies(page: number): Promise<MovieApiResponse> {
+    const url = `${BASE_URL}/movie/popular?api_key=${API_KEY}&page=${page}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error('Failed to fetch movies');
+    }
+    return response.json();
+}
