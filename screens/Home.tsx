@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
-import { fetchMovies, Movie } from '../services/MovieService.tsx';
+import { View, Text, FlatList, Image, StyleSheet, SafeAreaView, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { fetchMovies, Movie } from '../services/MovieService';
+import { useNavigation } from '@react-navigation/native';
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w200';
 
 const Home = () => {
+    const navigation = useNavigation();
     const [movies, setMovies] = useState<Movie[]>([]);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
@@ -12,13 +14,6 @@ const Home = () => {
     const loadMovies = async (pageNumber: number) => {
         if (loading) return;
         setLoading(true);
-        // try {
-        //     const data = await fetchMovies(pageNumber);
-        //     setMovies(prev => [...prev, ...data.results]);
-        //     setPage(pageNumber);
-        // } catch (error) {
-        //     console.error('Error fetching movies:', error);
-        // }
         await fetchMovies(pageNumber)
             .then(data => {
                 setMovies(prev => {
@@ -45,16 +40,21 @@ const Home = () => {
     };
 
     const renderItem = ({ item }: { item: Movie }) => (
-        <View style={styles.card}>
-            <Image
-                source={{ uri: `${IMAGE_BASE_URL}${item.poster_path}` }}
-                style={styles.poster}
-            />
-            <View style={styles.textContainer}>
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.overview} numberOfLines={4}>{item.overview}</Text>
+        <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.navigate('Detail', { id: item.id })}
+        >
+            <View style={styles.card}>
+                <Image
+                    source={{ uri: `${IMAGE_BASE_URL}${item.poster_path}` }}
+                    style={styles.poster}
+                />
+                <View style={styles.textContainer}>
+                    <Text style={styles.title}>{item.title}</Text>
+                    <Text style={styles.overview} numberOfLines={4}>{item.overview}</Text>
+                </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 
     return (

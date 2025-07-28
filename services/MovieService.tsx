@@ -1,5 +1,6 @@
-const API_KEY = 'INSERT_YOUR_API_KEY_HERE'; // Replace with your actual API key
+const API_KEY = 'b70d7dfa024fdc891e1451d1a34ec39a';
 const BASE_URL = 'https://api.themoviedb.org/3';
+
 export type Movie = {
     id: number;
     title: string;
@@ -22,3 +23,9 @@ export async function fetchMovies(page: number): Promise<MovieApiResponse> {
     }
     return response.json();
 }
+
+export const fetchMovieById = async (id: number): Promise<Movie> => {
+  const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`);
+  if (!response.ok) throw new Error('Network response was not ok');
+  return response.json();
+};
