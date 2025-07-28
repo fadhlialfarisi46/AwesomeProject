@@ -1,4 +1,4 @@
-const API_KEY = 'b70d7dfa024fdc891e1451d1a34ec39a';
+const API_KEY = 'INSERT_YOUR_API_KEY_HERE'; // Replace with your actual API key
 const BASE_URL = 'https://api.themoviedb.org/3';
 
 export type Movie = {
