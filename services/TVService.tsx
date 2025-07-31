@@ -1,6 +1,4 @@
-
-const API_KEY = 'b70d7dfa024fdc891e1451d1a34ec39a'; 
-const BASE_URL = 'https://api.themoviedb.org/3';
+import { API_KEY, BASE_URL } from '@env';
 
 export type TVShow = {
     id: number;

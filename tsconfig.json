@@ -9,5 +9,7 @@
     "esModuleInterop": true,
     "noImplicitAny": false
   },
-  "extends": "@react-native/typescript-config"
+  "extends": "@react-native/typescript-config",
+  "include": ["env.d.ts", "src"]
+
 }
